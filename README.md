@@ -6,26 +6,25 @@ Steps to run:
 
 Note: This scripts should be used after the following host prechecks are configured and one is ready to add the new host to cluster
   Prerequisite Checks : 
-    OS Validations: Ensure following OS level validations
-    vm.swappiness=1
-    Firewall (ip tables) is disabled
-    SE Linux is disabled
-    Transparent Huge Pages are disabled
-    IPv6 is disabled
-    NTPD is synchronized and running
-    Forward and Reverse DNS Lookup is enabled
-    Disk Check
+   OS Validations: Ensure following OS level validations
+    -vm.swappiness=1
+    -Firewall (ip tables) is disabled
+    -SE Linux is disabled
+    -Transparent Huge Pages are disabled
+    -IPv6 is disabled
+    -NTPD is synchronized and running
+    -Forward and Reverse DNS Lookup is enabled
+    -Disk Check
 
   Security checks
-    Kereberos Checks: 
+    -Kereberos Checks: 
       Validate openldap-clients and krb5workstation, krb5-libs are installed
       A copy of krb5.conf is copied to the new node to /etc/krb5.conf
-      Correct version of jdk and jce are installed
-
-    TLS [Assuming TLS is already enabled for Cloudera Manager Server and Agents (CM TLS level 3) ]
-      Node should have valid certificates : The Server certificates, java keystore, CA certs should be placed in the correct locations.(mostly /opt/cloudera/security/<ca-certs/pki/jks/x509> )
+      Correct version of jdk and jce are installed.
+   -TLS [Assuming TLS is already enabled for Cloudera Manager Server and Agents (CM TLS level 3)
+     Node should have valid certificates : The Server certificates, java keystore, CA certs should be placed in the correct
+     locations.(mostly /opt/cloudera/security/<ca-certs/pki/jks/x509> )
       
-   
  1. After the prechecks, configure the config section parameters in node_addition.sh
     JAVA_HOME="/usr/java/latest"
     host=`hostname`

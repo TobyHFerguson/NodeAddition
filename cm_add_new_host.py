@@ -25,12 +25,10 @@ def getHostTemplate(cluster,template):
 def applyHostTemplate(host_template,host):
     applyTemplate=host_template.apply_host_template(host,'TRUE')
  
-def addHostToCluster(api,cluster,newHosts):
-    hostlist=[]
-    hostlist.append(host.hostId)
+def addHostToCluster(api,cluster,newHostsList):
     print line
     print "++Adding HOST to the Cluster"
-    addHost=cluster.add_hosts(hostlist)
+    addHost=cluster.add_hosts(newHostList)
     //Waiting for 5 minutes so that the parcels get downloaded & distributed & activated
     print "++Wait Time++ 300 seconds"
     time.sleep(300)
@@ -40,11 +38,14 @@ if __name__ == '__main__':
  
     api = ApiResource(clouderaManagerHost, clouderaManagerPort, clouderaManagerUserName, clouderaManagerPassword, use_tls=clouderaManagerHTTPS)
     cluster = api.get_cluster(clusterDisplayName)
+    hostlist=[]
+ 
+ 
     for hostName in api.get_all_hosts():
         if hostName.hostname in newHosts:
                 host = api.get_host(hostName.hostId)
- 
-    addHost=addHostToCluster(api,cluster,host)
+                hostlist.append(host.hostId)
+    addHost=addHostToCluster(api,cluster,hostlist)
     start_time=time.time()
     parcel=cluster.get_parcel('CDH',parcelVersion)
      
@@ -66,6 +67,8 @@ if __name__ == '__main__':
      
     print "++HOST TEMPLATE to the NODE"
     try:
-        applyHostTemplate(host_template,host)
+        temlpate_name = "Worker"
+        host_template = getHostTemplate(cluster,template_name)
+        applyHostTemplate(host_template,hostlist)
     except ApiException as e:
         print "Error: " e
